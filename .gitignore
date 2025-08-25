@@ -1,0 +1,16 @@
+.vscode-test/
+.vscode-test-web/
+.history/
+.DS_Store
+.env
+.env.*
+node_modules/
+out/
+dist/
+tmp/
+*.log
+.vscode/*.code-workspace
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
