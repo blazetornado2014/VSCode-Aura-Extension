@@ -1,71 +1,51 @@
-# auraextension README
+# Aura Farm Time Tracker
 
-This is the README for your extension "auraextension". After writing up a brief description, we recommend including the following sections.
+A VS Code extension to help you track your coding time, manage goals and tasks, and gain XP and levels as you progress.
 
-## Features
+## Installation
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/blazetornado2014/VSCode-Aura-Extension.git
+    cd VSCode-Aura-Extension/auraextension
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Open in VS Code:**
+    Open the `auraextension` folder in VS Code.
+4.  **Run the extension:**
+    Press `F5` to run the extension in a new Extension Development Host window.
 
-For example if there is an image subfolder under your extension project workspace:
+## Features and Commands
 
-\!\[feature X\]\(images/feature-x.png\)
+The Aura Farm Time Tracker provides the following commands, which can be accessed via the VS Code Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`):
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+*   **`Aura Extension: Set Method to Pomodoro`**:
+    Switches the time tracking method to Pomodoro mode. In this mode, you work in focused intervals (e.g., 25 minutes) followed by short or long breaks.
+*   **`Aura Extension: Set Method to Default`**:
+    Switches the time tracking method back to Default mode, where your active coding time is continuously tracked.
+*   **`Aura Extension: Add Goal`**:
+    Allows you to add a new goal to your list. You will be prompted to enter the goal text.
+*   **`Aura Extension: Add Task`**:
+    (This command is typically used internally by the webview when adding tasks to a specific goal.)
+*   **`Aura Extension: Complete Task`**:
+    (This command is typically used internally by the webview when marking a task as complete.) Completing a task awards you Speed and XP.
+*   **`Aura Extension: Complete Goal`**:
+    (This command is typically used internally by the webview when marking a goal as complete.) Completing a goal awards you Strength and XP.
+*   **`Aura Extension: Log What I Learned`**:
+    Prompts you to enter something you've learned. Logging a learning awards you Knowledge and XP.
+*   **`Aura Extension: Reset Stats`**:
+    Resets your user level to 1 and XP to 0, along with other stats (Speed, Strength, Knowledge).
+*   **`Aura Extension: Hello World`**:
+    A simple command that displays a "Hello World" message.
 
-## Requirements
+## Usage
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Once the extension is running, you will see the "Aura Farm Time Tracker" view in the VS Code sidebar.
 
-## Extension Settings
+*   **Timer Tab**: Select your preferred time tracking method (Default or Pomodoro) and see your current status.
+*   **Stats & Tasks Tab**: View your current level, XP, and other stats. You can also add new goals and manage tasks associated with them.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+XP is gained by completing tasks, goals, and logging what you've learned. Leveling up requires accumulating enough XP.

@@ -40,6 +40,11 @@ export class TimeTrackerWebviewProvider implements vscode.WebviewViewProvider {
                         this.updateStatus(`You are currently on ${pomodoroModeEnabled ? 'Pomodoro' : 'Default'} mode`);
                         break;
                     }
+                case 'addGoal':
+                    {
+                        vscode.commands.executeCommand('auraextension.addGoal', data.value);
+                        break;
+                    }
             }
         });
     }
@@ -47,6 +52,18 @@ export class TimeTrackerWebviewProvider implements vscode.WebviewViewProvider {
     public updateStatus(status: string) {
         if (this._view) {
             this._view.webview.postMessage({ type: 'updateStatus', value: status });
+        }
+    }
+
+    public updateStats(stats: any) { // Using 'any' for now, will define a proper interface later if needed
+        if (this._view) {
+            this._view.webview.postMessage({ type: 'updateStats', value: stats });
+        }
+    }
+
+    public updateGoals(goals: any[]) { // Using 'any' for now, will define a proper interface later if needed
+        if (this._view) {
+            this._view.webview.postMessage({ type: 'updateGoals', value: goals });
         }
     }
 
@@ -82,12 +99,34 @@ export class TimeTrackerWebviewProvider implements vscode.WebviewViewProvider {
 				<title>Aura Farm Time Tracker</title>
 			</head>
 			<body>
-				<p style="font-size: 1.5em; font-weight: bold;">What timer do you want to use?</p>
-                <select id="method-select">
-                    <option value="auraextension.setMethodToDefault">Default</option>
-                    <option value="auraextension.setMethodToPomodoro">Pomodoro</option>
-                </select>
-                <p id="status-text"></p>
+				<div class="tab">
+					<button class="tablinks active" data-tab="Timer">Timer</button>
+					<button class="tablinks" data-tab="Stats">Stats & Tasks</button>
+				</div>
+
+				<div id="Timer" class="tabcontent" style="display: block;">
+					<p style="font-size: 1.5em; font-weight: bold;">What timer do you want to use?</p>
+					<select id="method-select">
+						<option value="auraextension.setMethodToDefault">Default</option>
+						<option value="auraextension.setMethodToPomodoro">Pomodoro</option>
+					</select>
+					<p id="status-text"></p>
+				</div>
+
+				<div id="Stats" class="tabcontent">
+					<h3>Stats</h3>
+					<p>Level: <span id="level">1</span></p>
+					<p>XP: <span id="xp">0</span> / <span id="xp-to-next-level">100</span></p>
+					<progress id="xp-bar" value="0" max="100"></progress>
+					<p>Speed: <span id="speed">0</span></p>
+					<p>Strength: <span id="strength">0</span></p>
+					<p>Knowledge: <span id="knowledge">0</span></p>
+					<hr>
+					<h3>Goals & Tasks</h3>
+					<input type="text" id="goal-input" placeholder="Add a new goal...">
+					<button id="add-goal-btn">Add Goal</button>
+					<ul id="goal-list"></ul>
+				</div>
 
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>

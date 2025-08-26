@@ -1,6 +1,6 @@
 {
   "name": "auraextension",
-  "displayName": "AuraFarmProgramming",
+  "displayName": "Aura Farm Time Tracker",
   "description": "Gamify programming in VSCode",
   "version": "0.0.1",
   "engines": {
@@ -63,7 +63,7 @@
                 "activitybar": [
                     {
                         "id": "auraFarmTimeTrackerContainer",
-                        "title": "AuraFarm Time Tracker",
+                        "title": "Aura Farm Time Tracker",
                         "icon": "media/aura-icon.svg"
                     }
                 ]
@@ -73,7 +73,7 @@
                     {
                         "type": "webview",
                         "id": "auraFarmTimeTracker",
-                        "name": "Time Tracker",
+                        "name": "Aura Farm Time Tracker",
                         "icon": "$(clock)"
                     }
                 ]

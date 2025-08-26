@@ -16,4 +16,115 @@ select {
     border: 1px solid var(--vscode-dropdown-border);
     background-color: var(--vscode-dropdown-background);
     color: var(--vscode-dropdown-foreground);
+    margin-bottom: 1em; /* Add some space below the select */
+}
+
+/* Tab styles */
+.tab {
+    overflow: hidden;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    margin-bottom: 1em;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 1em;
+    color: var(--vscode-tab-inactiveForeground);
+}
+
+.tab button:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+.tab button.active {
+    color: var(--vscode-tab-activeForeground);
+    border-bottom: 1px solid var(--vscode-tab-activeBorder);
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 0px;
+    border-top: none;
+}
+
+/* Stats & Tasks specific styles */
+h3 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+hr {
+    border-top: 1px solid var(--vscode-panel-border);
+    margin: 1em 0;
+}
+
+input[type="text"] {
+    width: calc(100% - 80px); /* Adjust width for button */
+    padding: 0.5em;
+    border: 1px solid var(--vscode-input-border);
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    margin-right: 0.5em;
+    margin-bottom: 1em; /* Added for spacing */
+}
+
+button {
+    padding: 0.5em 1em;
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 1em;
+}
+
+li {
+    background-color: var(--vscode-list-inactiveBackground);
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 3px;
+}
+
+progress {
+    width: 100%;
+    height: 10px;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    /* Style for WebKit browsers */
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: var(--vscode-editorWidget-background); /* Background for empty part */
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--vscode-editorWidget-background);
+    border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--vscode-charts-green); /* Color for filled part */
+    border-radius: 5px;
+}
+
+/* Style for Firefox */
+progress::-moz-progress-bar {
+    background-color: var(--vscode-charts-green);
+    border-radius: 5px;
 }
