@@ -1,0 +1,15 @@
+body {
+	background-color: var(--vscode-editor-background);
+	color: var(--vscode-editor-foreground);
+	font-family: var(--vscode-font-family);
+	font-weight: var(--vscode-font-weight);
+	font-size: var(--vscode-font-size);
+}
+
+a {
+	color: var(--vscode-textLink-foreground);
+}
+
+a:hover {
+	color: var(--vscode-textLink-activeForeground);
+}

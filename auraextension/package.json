@@ -9,18 +9,76 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onStartupFinished"
-  ],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "auraextension.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
+        "activationEvents": [
+            "onStartupFinished",
+            "onView:auraFarmTimeTracker"
+        ],
+        "main": "./dist/extension.js",
+        "contributes": {
+            "commands": [
+                {
+                    "command": "auraextension.helloWorld",
+                    "title": "Hello World"
+                },
+                {
+                    "command": "auraextension.setMethodToPomodoro",
+                    "title": "Set to Pomodoro Method"
+                },
+                {
+                    "command": "auraextension.setMethodToDefault",
+                    "title": "Set to Default Method"
+                }
+            ],
+            "configuration": {
+                "title": "AuraFarm Programming",
+                "properties": {
+                    "auraextension.pomodoro.enabled": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "Enable or disable Pomodoro Technique mode."
+                    },
+                    "auraextension.pomodoro.workDuration": {
+                        "type": "number",
+                        "default": 25,
+                        "description": "Duration of a work session in minutes (Pomodoro)."
+                    },
+                    "auraextension.pomodoro.shortBreakDuration": {
+                        "type": "number",
+                        "default": 5,
+                        "description": "Duration of a short break in minutes."
+                    },
+                    "auraextension.pomodoro.longBreakDuration": {
+                        "type": "number",
+                        "default": 20,
+                        "description": "Duration of a long break in minutes."
+                    },
+                    "auraextension.pomodoro.pomodorosBeforeLongBreak": {
+                        "type": "number",
+                        "default": 4,
+                        "description": "Number of Pomodoros before a long break."
+                    }
+                }
+            },
+            "viewsContainers": {
+                "activitybar": [
+                    {
+                        "id": "auraFarmTimeTrackerContainer",
+                        "title": "AuraFarm Time Tracker",
+                        "icon": "media/aura-icon.svg"
+                    }
+                ]
+            },
+            "views": {
+                "auraFarmTimeTrackerContainer": [
+                    {
+                        "type": "webview",
+                        "id": "auraFarmTimeTracker",
+                        "name": "Time Tracker",
+                        "icon": "$(clock)"
+                    }
+                ]
+            }
+        },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "npm run check-types && npm run lint && node esbuild.js",
