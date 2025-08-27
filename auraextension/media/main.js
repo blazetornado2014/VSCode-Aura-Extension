@@ -107,6 +107,7 @@
                         if (!goal.completed) {
                             const completeGoalBtn = document.createElement('button');
                             completeGoalBtn.textContent = 'Complete Goal';
+                            completeGoalBtn.className = 'complete-goal-btn';
                             completeGoalBtn.addEventListener('click', () => {
                                 vscode.postMessage({ type: 'completeGoal', value: goal.id });
                             });
@@ -134,13 +135,16 @@
                             const taskTextSpan = document.createElement('span');
                             taskTextSpan.textContent = task.text;
                             if (task.completed) {
-                                taskTextSpan.style.textDecoration = 'line-through';
+                                taskTextSpan.classList.add('completed-task-text');
                             }
                             taskLi.appendChild(taskTextSpan);
                             taskList.appendChild(taskLi);
                         });
 
                         if (!goal.completed) {
+                            const addTaskContainer = document.createElement('div');
+                            addTaskContainer.className = 'add-task-container';
+
                             const addTaskInput = document.createElement('input');
                             addTaskInput.type = 'text';
                             addTaskInput.placeholder = 'Add a new task...';
@@ -156,10 +160,12 @@
                                         goalId: goal.id,
                                         value: addTaskInput.value.trim()
                                     });
+                                    addTaskInput.value = ''; // Clear input after adding
                                 }
                             });
-                            taskList.appendChild(addTaskInput);
-                            taskList.appendChild(addTaskBtn);
+                            addTaskContainer.appendChild(addTaskInput);
+                            addTaskContainer.appendChild(addTaskBtn);
+                            taskList.appendChild(addTaskContainer);
                         }
 
                         goalLi.appendChild(taskList);

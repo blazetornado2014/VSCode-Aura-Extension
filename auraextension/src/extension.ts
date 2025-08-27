@@ -2,6 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { TimeTrackerWebviewProvider } from './TimeTrackerWebviewProvider';
+import axios from 'axios';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
 let activeCodingTimeSeconds = 0;
 let totalCodingTimeSecondsToday = 0;
@@ -259,6 +262,51 @@ function checkLevelUp() {
     }
 }
 
+async function getGeminiApiKey(): Promise<string | undefined> {
+    // For local development, read from .env
+    return process.env.GEMINI_API_KEY;
+}
+
+async function getTasksFromGemini(goalText: string): Promise<string[]> {
+    const apiKey = await getGeminiApiKey();
+    if (!apiKey) {
+        vscode.window.showErrorMessage('Gemini API Key not found. Please set GEMINI_API_KEY in your .env file.');
+        return [];
+    }
+
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+
+    try {
+        const response = await axios.post(GEMINI_API_URL, {
+            contents: [{
+                parts: [{
+                    text: `Break down the following goal into a list of actionable tasks. Respond with a JSON array of strings, where each string is a task. Example: ["Task 1", "Task 2"]. Goal: "${goalText}"`
+                }]
+            }]
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const responseText = response.data.candidates[0].content.parts[0].text;
+        // Gemini might return markdown code block, try to parse it
+        const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/);
+        let tasks: string[] = [];
+        if (jsonMatch && jsonMatch[1]) {
+            tasks = JSON.parse(jsonMatch[1]);
+        } else {
+            // Fallback if not a markdown code block, try to parse directly
+            tasks = JSON.parse(responseText);
+        }
+        return tasks;
+    } catch (error: any) {
+        vscode.window.showErrorMessage(`Failed to get tasks from Gemini API: ${error.message}`);
+        console.error('Gemini API Error:', error.response ? error.response.data : error.message);
+        return [];
+    }
+}
+
 
 
 // This method is called when your extension is activated
@@ -343,11 +391,18 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('auraextension.setMethodToDefault', () => setPomodoroMode(false, provider)));
 
     context.subscriptions.push(vscode.commands.registerCommand('auraextension.addGoal', async (goalText: string) => {
+        const generatedTasks = await getTasksFromGemini(goalText);
+        const tasks: Task[] = generatedTasks.map(taskText => ({
+            id: Date.now().toString() + Math.random().toString(36).substring(2, 9), // More robust unique ID
+            text: taskText,
+            completed: false
+        }));
+
         const newGoal: Goal = {
             id: Date.now().toString(), // Simple unique ID
             text: goalText,
             completed: false,
-            tasks: []
+            tasks: tasks
         };
         goals.push(newGoal);
         globalState.update('goals', goals);

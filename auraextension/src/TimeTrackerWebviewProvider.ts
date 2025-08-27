@@ -125,7 +125,9 @@ export class TimeTrackerWebviewProvider implements vscode.WebviewViewProvider {
 					<h3>Goals & Tasks</h3>
 					<input type="text" id="goal-input" placeholder="Add a new goal...">
 					<button id="add-goal-btn">Add Goal</button>
-					<ul id="goal-list"></ul>
+					<ul id="goal-list">
+						<!-- Goals and tasks will be rendered here by main.js -->
+					</ul>
 				</div>
 
 				<script nonce="${nonce}" src="${scriptUri}"></script>
